@@ -2,7 +2,7 @@
 
 Small challenge from the "Dev Eficiente" course.
 
-# Requirement
+# Requirement 1
 
 It is required to register a new author in the system. Each author has a name, an email and a description. We also want to
 record the exact timestamp when they were registered.
@@ -18,3 +18,7 @@ Constraints:
 # Expected Result
 
 A new author is created and HTTP status 200 is returned
+
+# Requirement 2
+
+- The email must be unique

@@ -105,4 +105,31 @@ class AuthorControllerTest{
                 }
             }
     }
+
+    @Test
+    fun `should not accept duplicated emails`() {
+        val payload = """
+            {
+              "name": "New Author",
+              "email": "newauthor@example.com",
+              "description": "Some description"
+            }
+        """.trimIndent()
+
+        mockMvc.post("/authors") {
+            contentType = MediaType.APPLICATION_JSON
+            content = payload
+        }.andExpect { status { isOk() } }
+
+        mockMvc.post("/authors") {
+            contentType = MediaType.APPLICATION_JSON
+            content = payload
+        }
+            .andExpect {
+                status { isBadRequest() }
+                jsonPath("\$.detail") {
+                    value("Email is duplicated")
+                }
+            }
+    }
 }

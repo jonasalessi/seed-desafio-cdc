@@ -4,6 +4,7 @@ import jakarta.persistence.*
 import java.time.Instant
 
 @Entity
+@Table(name = "authors", uniqueConstraints = [UniqueConstraint(columnNames = ["email"])])
 class Author(
     @Column(nullable = false)
     val name: String,
