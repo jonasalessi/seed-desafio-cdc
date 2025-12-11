@@ -1,8 +1,7 @@
 package com.challenge.author
 
-import com.challenge.DomainException
+import com.challenge.EmailDuplicatedException
 import jakarta.validation.Valid
-import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -14,10 +13,9 @@ class AuthorController(private val repository: AuthorRepository) {
 
     @PostMapping
     fun create(@RequestBody @Valid request: NewAuthorRequest) {
-        try {
-            repository.save(request.toEntity())
-        } catch (_: DataIntegrityViolationException) {
-            throw DomainException("Email is duplicated")
+        if (repository.existsByEmail(request.email)) {
+            throw EmailDuplicatedException(request.email)
         }
+        repository.save(request.toEntity())
     }
 }

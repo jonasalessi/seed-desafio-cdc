@@ -128,7 +128,7 @@ class AuthorControllerTest{
             .andExpect {
                 status { isBadRequest() }
                 jsonPath("\$.detail") {
-                    value("Email is duplicated")
+                    value("Email 'newauthor@example.com' is duplicated")
                 }
             }
     }

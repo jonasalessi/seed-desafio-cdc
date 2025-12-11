@@ -1,5 +1,6 @@
 package com.challenge
 
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ProblemDetail
 import org.springframework.validation.BindException
@@ -10,6 +11,17 @@ import java.time.Instant
 
 @RestControllerAdvice
 class ControllerExceptionHandler {
+
+    @ExceptionHandler(DataIntegrityViolationException::class)
+    fun handleDataIntegrityViolationException(ex: DataIntegrityViolationException): ProblemDetail {
+        val problemDetail = ProblemDetail.forStatusAndDetail(
+            HttpStatus.BAD_REQUEST,
+            "The record was being edited by another user, please try again"
+        )
+        problemDetail.title = "Data Integrity Error"
+        problemDetail.setProperty("timestamp", Instant.now())
+        return problemDetail
+    }
 
     @ExceptionHandler(DomainException::class)
     fun handleDomainException(ex: DomainException): ProblemDetail {
