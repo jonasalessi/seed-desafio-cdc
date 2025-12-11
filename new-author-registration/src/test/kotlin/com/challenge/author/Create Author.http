@@ -1,0 +1,9 @@
+POST localhost:8080/authors
+Content-Type: application/json
+Accept: application/problem+json
+
+{
+    "name": "",
+    "email": "alice@example.com",
+    "description": "Author of many books"
+}
