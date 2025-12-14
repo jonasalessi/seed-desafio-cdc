@@ -1,5 +1,6 @@
 package com.challenge
 
+import jakarta.validation.ConstraintViolationException
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ProblemDetail
@@ -47,6 +48,9 @@ class ControllerExceptionHandler {
         return problemDetail
     }
 
+    /**
+     * It covers validation done from Spring MVC (Data Binder)
+     */
     @ExceptionHandler(BindException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun handleMethodArgumentNotValidException(ex: BindException): ProblemDetail {
@@ -58,6 +62,28 @@ class ControllerExceptionHandler {
         val errors = mutableMapOf<String, String>()
         ex.bindingResult.fieldErrors.forEach { fieldError ->
             errors[fieldError.field] = fieldError.defaultMessage ?: "Validation error"
+        }
+
+        problemDetail.setProperty("errors", errors)
+        problemDetail.setProperty("timestamp", Instant.now())
+
+        return problemDetail
+    }
+
+    /**
+     * It covers validation done from Hibernate
+     */
+    @ExceptionHandler(ConstraintViolationException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun handleConstraintViolationException(ex: ConstraintViolationException): ProblemDetail {
+        val problemDetail = ProblemDetail.forStatusAndDetail(
+            HttpStatus.BAD_REQUEST,
+            "Validation failed. Check 'errors' for details"
+        )
+        problemDetail.title = "Validation Error"
+        val errors = mutableMapOf<String, String>()
+        ex.constraintViolations.forEach { violation ->
+            errors[violation.propertyPath.toString()] = violation.message
         }
 
         problemDetail.setProperty("errors", errors)

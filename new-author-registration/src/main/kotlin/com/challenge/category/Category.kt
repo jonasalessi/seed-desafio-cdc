@@ -1,11 +1,13 @@
 package com.challenge.category
 
 import jakarta.persistence.*
+import jakarta.validation.constraints.NotBlank
 
 @Entity
-@Table(name = "categories", uniqueConstraints = [UniqueConstraint(columnNames = ["name"])])
+@Table(name = "categories", uniqueConstraints = [UniqueConstraint(columnNames = ["name"], name = "uk_category_name")])
 class Category(
     @Column(nullable = false)
+    @NotBlank
     val name: String
 ) {
     @Id
