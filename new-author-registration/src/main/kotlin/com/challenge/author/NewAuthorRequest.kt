@@ -10,7 +10,6 @@ class NewAuthorRequest(
 
     @field:NotBlank(message = "Email is required")
     @field:Email(message = "Email is invalid")
-    @field:EmailUnique
     val email: String,
 
     @field:NotBlank(message = "Description is required")

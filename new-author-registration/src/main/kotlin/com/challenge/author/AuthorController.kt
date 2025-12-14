@@ -1,6 +1,6 @@
 package com.challenge.author
 
-import com.challenge.EmailDuplicatedException
+import com.challenge.FieldValidationException
 import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -14,7 +14,7 @@ class AuthorController(private val repository: AuthorRepository) {
     @PostMapping
     fun create(@RequestBody @Valid request: NewAuthorRequest) {
         if (repository.existsByEmail(request.email)) {
-            throw EmailDuplicatedException(request.email)
+            throw FieldValidationException("email", "Email '${request.email}' is duplicated")
         }
         repository.save(request.toEntity())
     }

@@ -1,5 +1,4 @@
 package com.challenge
 
-open class DomainException(message: String) : Exception(message)
-
-class EmailDuplicatedException(email: String) : DomainException("Email '$email' is duplicated")
+open class DomainException(message: String) : RuntimeException(message)
+open class FieldValidationException(val field: String, message: String) : RuntimeException(message)

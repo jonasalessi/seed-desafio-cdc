@@ -34,6 +34,19 @@ class ControllerExceptionHandler {
         return problemDetail
     }
 
+    @ExceptionHandler(FieldValidationException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun handleFieldValidationException(ex: FieldValidationException): ProblemDetail {
+        val problemDetail = ProblemDetail.forStatusAndDetail(
+            HttpStatus.BAD_REQUEST,
+            "Validation failed. Check 'errors' for details"
+        )
+        problemDetail.title = "Field Validation Error"
+        problemDetail.setProperty("errors", mapOf(ex.field to ex.message))
+        problemDetail.setProperty("timestamp", Instant.now())
+        return problemDetail
+    }
+
     @ExceptionHandler(BindException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun handleMethodArgumentNotValidException(ex: BindException): ProblemDetail {
