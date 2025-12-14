@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/authors")
-class AuthorController(private val repository: AuthorRepository) {
+class RegisterAuthorController(private val repository: AuthorRepository) {
 
     @PostMapping
-    fun create(@RequestBody @Valid request: NewAuthorRequest) {
+    fun create(@RequestBody @Valid request: RegisterAuthorRequest) {
         if (repository.existsByEmail(request.email)) {
             throw FieldValidationException("email", "Email '${request.email}' is duplicated")
         }

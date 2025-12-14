@@ -26,12 +26,12 @@ class Author(
         if (this === other) return true
         if (other !is Author) return false
 
-        if (id != other.id) return false
+        if (email != other.email) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        return id?.hashCode() ?: 0
+        return email.hashCode()
     }
 }

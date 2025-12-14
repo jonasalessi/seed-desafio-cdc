@@ -1,19 +1,11 @@
 package com.challenge.author
 
+import com.challenge.IntegrationTest
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc
 import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 
-@SpringBootTest
-@AutoConfigureMockMvc
-class AuthorControllerTest{
-
-    @Autowired
-    private lateinit var mockMvc: MockMvc
+class RegisterAuthorControllerTest : IntegrationTest() {
 
     @Test
     fun `should create a new author and return 200`() {
@@ -26,7 +18,7 @@ class AuthorControllerTest{
         """.trimIndent()
 
         mockMvc.post("/authors") {
-            contentType = MediaType.APPLICATION_PROBLEM_JSON
+            contentType = MediaType.APPLICATION_JSON
             content = payload
         }
             .andExpect {
