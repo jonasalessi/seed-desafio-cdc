@@ -15,10 +15,26 @@ Constraints:
 - The name is required
 - The description is required and must not exceed 400 characters
 
-# Expected Result
+## Expected Result
 
 A new author is created and HTTP status 200 is returned
 
 # Requirement 2
 
 - The email must be unique
+
+# Requirement 3
+
+## Registering a category
+
+Every category needs a name.
+
+Constraints:
+
+- The name is required.
+- The name cannot be duplicated.
+
+### Expected result
+
+- A new category has been registered in the system and status 200 has been returned.
+- If any restriction is not met, return a 400 error and a JSON object indicating the validation problems.
