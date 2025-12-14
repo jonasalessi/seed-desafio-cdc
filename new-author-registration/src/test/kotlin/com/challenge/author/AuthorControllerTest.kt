@@ -50,6 +50,9 @@ class AuthorControllerTest{
         }
             .andExpect {
                 status { isBadRequest() }
+                jsonPath("\$.errors.length()") {
+                    value(3)
+                }
                 jsonPath("\$.errors.name"){
                     value("Name is required")
                 }
@@ -78,6 +81,9 @@ class AuthorControllerTest{
         }
             .andExpect {
                 status { isBadRequest() }
+                jsonPath("\$.errors.length()") {
+                    value(1)
+                }
                 jsonPath("\$.errors.email"){
                     value("Email is invalid")
                 }
@@ -89,7 +95,7 @@ class AuthorControllerTest{
         val payload = """
             {
               "name": "Alice",
-              "email": "alice@example.com",
+              "email": "alice.2@example.com",
               "description": "${"a".repeat(401)}"
             }
         """.trimIndent()
@@ -100,6 +106,9 @@ class AuthorControllerTest{
         }
             .andExpect {
                 status { isBadRequest() }
+                jsonPath("\$.errors.length()") {
+                    value(1)
+                }
                 jsonPath("\$.errors.description"){
                     value("Description must be at most 400 characters long")
                 }
@@ -127,8 +136,11 @@ class AuthorControllerTest{
         }
             .andExpect {
                 status { isBadRequest() }
+                jsonPath("\$.errors.length()") {
+                    value(1)
+                }
                 jsonPath("\$.errors.email") {
-                    value("Email is duplicated")
+                    value("Email 'newauthor@example.com' is duplicated")
                 }
             }
     }
