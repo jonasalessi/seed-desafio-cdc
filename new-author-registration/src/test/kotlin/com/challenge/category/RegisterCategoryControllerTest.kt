@@ -3,13 +3,15 @@ package com.challenge.category
 import com.challenge.IntegrationTest
 import org.junit.jupiter.api.Test
 import org.springframework.http.MediaType
-import org.springframework.test.context.jdbc.Sql
+import org.springframework.test.annotation.Rollback
 import org.springframework.test.web.servlet.post
+import org.springframework.transaction.annotation.Transactional
 
-@Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_CLASS, scripts = ["/categories-clean.sql"])
 class RegisterCategoryControllerTest : IntegrationTest() {
 
     @Test
+    @Transactional
+    @Rollback
     fun `should create a new author and return 200`() {
         val payload = """
             {

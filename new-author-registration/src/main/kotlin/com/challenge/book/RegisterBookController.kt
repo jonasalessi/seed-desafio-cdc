@@ -4,6 +4,7 @@ import com.challenge.FieldValidationException
 import com.challenge.author.AuthorRepository
 import com.challenge.category.CategoryRepository
 import jakarta.validation.Valid
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -18,6 +19,7 @@ class RegisterBookController(
 ) {
 
     @PostMapping
+    @Transactional
     fun create(@RequestBody @Valid request: RegisterBookRequest) {
         val category = categoryRepository.findById(request.categoryId)
         if (!category.isPresent) {
