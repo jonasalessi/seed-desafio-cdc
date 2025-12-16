@@ -1,0 +1,15 @@
+POST localhost:8080/books
+Content-Type: application/json
+Accept: application/problem+json
+
+{
+  "title": "Clean Code",
+  "summary": "A handbook of Agile software craftsmanship.",
+  "tableOfContents": "# TOC - Chapter 1- Chapter 2",
+  "price": "39.99",
+  "numberOfPages": 120,
+  "isbn": "xxxx",
+  "releaseDate": "2035-12-31",
+  "categoryId": 1,
+  "authorId": 1
+}

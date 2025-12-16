@@ -3,8 +3,10 @@ package com.challenge.category
 import com.challenge.IntegrationTest
 import org.junit.jupiter.api.Test
 import org.springframework.http.MediaType
+import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.web.servlet.post
 
+@Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_CLASS, scripts = ["/categories-clean.sql"])
 class RegisterCategoryControllerTest : IntegrationTest() {
 
     @Test

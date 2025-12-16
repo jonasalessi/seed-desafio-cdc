@@ -3,8 +3,11 @@ package com.challenge.author
 import com.challenge.IntegrationTest
 import org.junit.jupiter.api.Test
 import org.springframework.http.MediaType
+import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.web.servlet.post
 
+
+@Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_CLASS, scripts = ["/authors-clean.sql"])
 class RegisterAuthorControllerTest : IntegrationTest() {
 
     @Test

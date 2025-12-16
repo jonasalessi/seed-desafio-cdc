@@ -1,6 +1,6 @@
 # About
 
-Small challenge from the "Dev Eficiente" course.
+Challenge from the "Dev Eficiente" course. Implementing an online bookstore.
 
 # Requirement 1
 
@@ -38,3 +38,37 @@ Constraints:
 
 - A new category has been registered in the system and status 200 has been returned.
 - If any restriction is not met, return a 400 error and a JSON object indicating the validation problems.
+
+# Requirement 4
+
+Needs:
+
+- A title
+- A summary of what will be found in the book
+- A free-size table of contents. The text should be in Markdown format, which is a string. That way it can be formatted later
+  appropriately.
+- Book price
+- Number of pages
+- ISBN (book identifier)
+- The date it should go live (publication date)
+- A book belongs to a category
+- A book has an author
+
+Constraints:
+
+- Title is required
+- Title is unique
+- Summary is required and has a maximum of 500 characters
+- Table of contents is free-size
+- Price is required and the minimum is 20
+- Number of pages is required and the minimum is 100
+- ISBN is required, format is free
+- ISBN is unique
+- The release date must be in the future
+- Category cannot be null
+- Author cannot be null
+
+Expected result:
+
+- A new book must be created and status 200 returned
+- If any constraint is not met, return 400 and a JSON informing the validation problems
