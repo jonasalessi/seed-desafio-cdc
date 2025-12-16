@@ -19,7 +19,7 @@ class Author(
     @NotBlank
     val description: String,
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TIMESTAMP")
     val createdAt: Instant = Instant.now()
 ) {
     @Id

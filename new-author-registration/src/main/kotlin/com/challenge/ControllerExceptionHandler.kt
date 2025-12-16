@@ -4,91 +4,116 @@ import jakarta.validation.ConstraintViolationException
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ProblemDetail
+import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.validation.BindException
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import tools.jackson.module.kotlin.KotlinInvalidNullException
 import java.time.Instant
 
 @RestControllerAdvice
 class ControllerExceptionHandler {
 
-    @ExceptionHandler(DataIntegrityViolationException::class)
-    fun handleDataIntegrityViolationException(ex: DataIntegrityViolationException): ProblemDetail {
-        val problemDetail = ProblemDetail.forStatusAndDetail(
-            HttpStatus.BAD_REQUEST,
-            "The record was being edited by another user, please try again"
-        )
-        problemDetail.title = "Data Integrity Error"
+    private fun buildProblemDetail(
+        status: HttpStatus,
+        title: String,
+        detail: String,
+        errors: Map<String, String>? = null
+    ): ProblemDetail {
+        val problemDetail = ProblemDetail.forStatusAndDetail(status, detail)
+        problemDetail.title = title
+        errors?.let { problemDetail.setProperty("errors", it) }
         problemDetail.setProperty("timestamp", Instant.now())
         return problemDetail
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException::class)
+    fun handleDataIntegrityViolationException(): ProblemDetail {
+        return buildProblemDetail(
+            HttpStatus.BAD_REQUEST,
+            "Data Integrity Error",
+            "A constraint violation was detected in the data. "
+        )
     }
 
     @ExceptionHandler(DomainException::class)
     fun handleDomainException(ex: DomainException): ProblemDetail {
-        val problemDetail = ProblemDetail.forStatusAndDetail(
+        return buildProblemDetail(
             HttpStatus.BAD_REQUEST,
-            ex.message
+            "Domain Error",
+            ex.message ?: "An error occurred"
         )
-        problemDetail.title = "Domain Error"
-        problemDetail.setProperty("timestamp", Instant.now())
-        return problemDetail
     }
 
     @ExceptionHandler(FieldValidationException::class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun handleFieldValidationException(ex: FieldValidationException): ProblemDetail {
-        val problemDetail = ProblemDetail.forStatusAndDetail(
+        return buildProblemDetail(
             HttpStatus.BAD_REQUEST,
-            "Validation failed. Check 'errors' for details"
+            "Field Validation Error",
+            "Validation failed. Check 'errors' for details",
+            mapOf(ex.field to ex.message!!)
         )
-        problemDetail.title = "Field Validation Error"
-        problemDetail.setProperty("errors", mapOf(ex.field to ex.message))
-        problemDetail.setProperty("timestamp", Instant.now())
-        return problemDetail
     }
 
     /**
      * It covers validation done from Spring MVC (Data Binder)
      */
-    @ExceptionHandler(BindException::class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = [BindException::class, MethodArgumentNotValidException::class])
     fun handleMethodArgumentNotValidException(ex: BindException): ProblemDetail {
-        val problemDetail = ProblemDetail.forStatusAndDetail(
-            HttpStatus.BAD_REQUEST,
-            "Validation failed. Check 'errors' for details"
-        )
-        problemDetail.title = "Validation Error"
         val errors = mutableMapOf<String, String>()
         ex.bindingResult.fieldErrors.forEach { fieldError ->
             errors[fieldError.field] = fieldError.defaultMessage ?: "Validation error"
         }
-
-        problemDetail.setProperty("errors", errors)
-        problemDetail.setProperty("timestamp", Instant.now())
-
-        return problemDetail
+        return buildProblemDetail(
+            HttpStatus.BAD_REQUEST,
+            "Validation Error",
+            "Validation failed. Check 'errors' for details",
+            errors
+        )
     }
 
+    @ExceptionHandler(Exception::class)
+    fun handleException(ex: Exception): ProblemDetail {
+        return buildProblemDetail(
+            HttpStatus.INTERNAL_SERVER_ERROR,
+            "Internal Server Error",
+            "An error occurred. Please try again later"
+        )
+    }
     /**
      * It covers validation done from Hibernate
      */
     @ExceptionHandler(ConstraintViolationException::class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun handleConstraintViolationException(ex: ConstraintViolationException): ProblemDetail {
-        val problemDetail = ProblemDetail.forStatusAndDetail(
-            HttpStatus.BAD_REQUEST,
-            "Validation failed. Check 'errors' for details"
-        )
-        problemDetail.title = "Validation Error"
         val errors = mutableMapOf<String, String>()
         ex.constraintViolations.forEach { violation ->
             errors[violation.propertyPath.toString()] = violation.message
         }
+        return buildProblemDetail(
+            HttpStatus.BAD_REQUEST,
+            "Validation Error",
+            "Validation failed. Check 'errors' for details",
+            errors
+        )
+    }
 
-        problemDetail.setProperty("errors", errors)
-        problemDetail.setProperty("timestamp", Instant.now())
+    @ExceptionHandler(HttpMessageNotReadableException::class)
+    fun handleHttpMessageNotReadableException(ex: HttpMessageNotReadableException): ProblemDetail {
+        if (ex.cause is KotlinInvalidNullException) {
+            val problem = ex.cause as KotlinInvalidNullException
+            return buildProblemDetail(
+                HttpStatus.BAD_REQUEST,
+                "Validation Error",
+                "Payload is invalid",
+                mapOf(problem.propertyName.toString() to "Field is required")
+            )
+        }
 
-        return problemDetail
+        return buildProblemDetail(
+            HttpStatus.BAD_REQUEST,
+            "Payload is invalid",
+            "The payload is invalid. Please send a valid JSON"
+        )
     }
 }

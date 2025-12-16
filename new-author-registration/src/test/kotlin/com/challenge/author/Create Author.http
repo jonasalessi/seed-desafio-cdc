@@ -3,7 +3,7 @@ Content-Type: application/json
 Accept: application/problem+json
 
 {
-    "name": "",
+  "name": "Test",
     "email": "alice@example.com",
     "description": "Author of many books"
 }

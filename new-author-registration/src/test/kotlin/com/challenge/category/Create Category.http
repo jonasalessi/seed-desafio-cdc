@@ -1,0 +1,6 @@
+POST localhost:8080/categories
+Content-Type: application/json
+
+{
+  "name": "Action"
+}
