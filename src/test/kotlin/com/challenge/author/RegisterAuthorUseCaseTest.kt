@@ -8,7 +8,7 @@ import org.springframework.test.web.servlet.post
 import org.springframework.transaction.annotation.Transactional
 
 
-class RegisterAuthorControllerTest : IntegrationTest() {
+class RegisterAuthorUseCaseTest : IntegrationTest() {
 
     @Test
     @Transactional

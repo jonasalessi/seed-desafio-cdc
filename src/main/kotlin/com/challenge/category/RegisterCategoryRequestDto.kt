@@ -2,7 +2,7 @@ package com.challenge.category
 
 import jakarta.validation.constraints.NotBlank
 
-class RegisterCategoryRequest(
+class RegisterCategoryRequestDto(
     @field:NotBlank(message = "Name is required")
     val name: String
 ) {

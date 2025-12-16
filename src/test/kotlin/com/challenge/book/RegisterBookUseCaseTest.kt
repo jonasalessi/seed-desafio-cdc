@@ -8,7 +8,7 @@ import org.springframework.test.web.servlet.post
 
 @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS, scripts = ["/register-book.sql"])
 @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_CLASS, scripts = ["/register-book-clean.sql"])
-class RegisterBookControllerTest : IntegrationTest() {
+class RegisterBookUseCaseTest : IntegrationTest() {
 
     @Test
     fun `should returns 400 when category does not exists`() {

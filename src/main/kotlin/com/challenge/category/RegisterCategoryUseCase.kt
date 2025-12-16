@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/categories")
-class RegisterCategoryController(private val repository: CategoryRepository) {
+class RegisterCategoryUseCase(private val repository: CategoryRepository) {
 
     @PostMapping
     @Transactional
-    fun create(@RequestBody @Valid request: RegisterCategoryRequest) {
+    fun execute(@RequestBody @Valid request: RegisterCategoryRequestDto) {
         if (repository.existsByNameIgnoreCase(request.name)) {
             throw FieldValidationException("name", "Name '${request.name}' is duplicated")
         }

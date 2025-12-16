@@ -7,7 +7,7 @@ import org.springframework.test.annotation.Rollback
 import org.springframework.test.web.servlet.post
 import org.springframework.transaction.annotation.Transactional
 
-class RegisterCategoryControllerTest : IntegrationTest() {
+class RegisterCategoryUseCaseTest : IntegrationTest() {
 
     @Test
     @Transactional

@@ -6,7 +6,7 @@ import jakarta.validation.constraints.*
 import java.math.BigDecimal
 import java.time.LocalDate
 
-class RegisterBookRequest(
+class RegisterBookRequestDto(
     @NotBlank(message = "Title is required")
     val title: String,
     @NotBlank(message = "Summary is required")

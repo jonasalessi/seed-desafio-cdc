@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/books")
-class RegisterBookController(
+class RegisterBookUseCase(
     private val categoryRepository: CategoryRepository,
     private val authorRepository: AuthorRepository,
     private val bookRepository: BookRepository
@@ -20,7 +20,7 @@ class RegisterBookController(
 
     @PostMapping
     @Transactional
-    fun create(@RequestBody @Valid request: RegisterBookRequest) {
+    fun execute(@RequestBody @Valid request: RegisterBookRequestDto) {
         val category = categoryRepository.findById(request.categoryId)
         if (!category.isPresent) {
             throw FieldValidationException("categoryId", "Category not found")
