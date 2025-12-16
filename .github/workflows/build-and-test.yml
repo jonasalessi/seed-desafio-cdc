@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ master ]
 
+permissions:
+  contents: read
+  checks: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,6 +19,9 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: Validate Gradle wrapper
+      uses: gradle/wrapper-validation-action@v3
+
     - name: Set up JDK 17
       uses: actions/setup-java@v4
       with:
@@ -22,22 +29,18 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-
     - name: Build with Gradle
       run: ./gradlew clean build
 
     - name: Generate test coverage report
-      run: ./gradlew test jacocoTestReport
+      run: ./gradlew jacocoTestReport
       continue-on-error: true
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v5
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        file: ./build/reports/jacoco/test/jacocoTestReport.xml
-        flags: unittests
+        file: build/reports/jacoco/test/jacocoTestReport.xml
       continue-on-error: true
 
     - name: Publish test results
