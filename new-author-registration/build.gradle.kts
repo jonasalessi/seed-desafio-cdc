@@ -4,6 +4,7 @@ plugins {
 	id("org.springframework.boot") version "4.0.0"
 	id("io.spring.dependency-management") version "1.1.7"
 	kotlin("plugin.jpa") version "2.2.10"
+	jacoco
 }
 
 group = "com.challenge"
@@ -48,4 +49,18 @@ allOpen {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+	finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+	dependsOn(tasks.test)
+	reports {
+		xml.required = true
+		html.required = true
+		csv.required = false
+	}
+}
+
+jacoco {
+	toolVersion = "0.8.12"
 }

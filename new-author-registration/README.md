@@ -2,6 +2,11 @@
 
 Challenge from the "Dev Eficiente" course. Implementing an online bookstore.
 
+## CI/CD Status
+
+[![Build and Test](https://github.com/jonasalessi/seed-desafio-cdc/actions/workflows/build-and-test.yml/badge.svg?branch=master)](https://github.com/jonasalessi/seed-desafio-cdc/actions/workflows/build-and-test.yml)
+[![codecov](https://codecov.io/gh/jonasalessi/seed-desafio-cdc/branch/master/graph/badge.svg)](https://codecov.io/gh/jonasalessi/seed-desafio-cdc)
+
 # Requirement 1
 
 It is required to register a new author in the system. Each author has a name, an email and a description. We also want to
