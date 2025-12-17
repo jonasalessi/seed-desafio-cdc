@@ -19,11 +19,13 @@ class ControllerExceptionHandler {
         status: HttpStatus,
         title: String,
         detail: String,
-        errors: Map<String, String>? = null
+        fieldErrors: Map<String, String>? = null,
+        globalErrors: Map<String, String>? = null
     ): ProblemDetail {
         val problemDetail = ProblemDetail.forStatusAndDetail(status, detail)
         problemDetail.title = title
-        errors?.let { problemDetail.setProperty("errors", it) }
+        fieldErrors?.let { problemDetail.setProperty("fields", it) }
+        globalErrors?.let { problemDetail.setProperty("global", it) }
         problemDetail.setProperty("timestamp", Instant.now())
         return problemDetail
     }
@@ -61,15 +63,20 @@ class ControllerExceptionHandler {
      */
     @ExceptionHandler(value = [BindException::class, MethodArgumentNotValidException::class])
     fun handleMethodArgumentNotValidException(ex: BindException): ProblemDetail {
-        val errors = mutableMapOf<String, String>()
+        val fieldErrors = mutableMapOf<String, String>()
+        val globalErrors = mutableMapOf<String, String>()
+        ex.bindingResult.globalErrors.forEach { globalError ->
+            globalErrors[globalError.objectName] = globalError.defaultMessage ?: "Validation error"
+        }
         ex.bindingResult.fieldErrors.forEach { fieldError ->
-            errors[fieldError.field] = fieldError.defaultMessage ?: "Validation error"
+            fieldErrors[fieldError.field] = fieldError.defaultMessage ?: "Validation error"
         }
         return buildProblemDetail(
             HttpStatus.BAD_REQUEST,
             "Validation Error",
             "Validation failed. Check 'errors' for details",
-            errors
+            fieldErrors,
+            globalErrors
         )
     }
 

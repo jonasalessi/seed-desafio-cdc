@@ -47,16 +47,16 @@ class RegisterAuthorUseCaseTest : IntegrationTest() {
         }
             .andExpect {
                 status { isBadRequest() }
-                jsonPath("\$.errors.length()") {
+                jsonPath("\$.fields.length()") {
                     value(3)
                 }
-                jsonPath("\$.errors.name"){
+                jsonPath("\$.fields.name"){
                     value("Name is required")
                 }
-                jsonPath("\$.errors.email"){
+                jsonPath("\$.fields.email"){
                     value("Email is required")
                 }
-                jsonPath("\$.errors.description"){
+                jsonPath("\$.fields.description"){
                     value("Description is required")
                 }
             }
@@ -78,10 +78,10 @@ class RegisterAuthorUseCaseTest : IntegrationTest() {
         }
             .andExpect {
                 status { isBadRequest() }
-                jsonPath("\$.errors.length()") {
+                jsonPath("\$.fields.length()") {
                     value(1)
                 }
-                jsonPath("\$.errors.email"){
+                jsonPath("\$.fields.email"){
                     value("Email is invalid")
                 }
             }
@@ -103,10 +103,10 @@ class RegisterAuthorUseCaseTest : IntegrationTest() {
         }
             .andExpect {
                 status { isBadRequest() }
-                jsonPath("\$.errors.length()") {
+                jsonPath("\$.fields.length()") {
                     value(1)
                 }
-                jsonPath("\$.errors.description"){
+                jsonPath("\$.fields.description"){
                     value("Description must be at most 400 characters long")
                 }
             }
@@ -135,10 +135,10 @@ class RegisterAuthorUseCaseTest : IntegrationTest() {
         }
             .andExpect {
                 status { isBadRequest() }
-                jsonPath("\$.errors.length()") {
+                jsonPath("\$.fields.length()") {
                     value(1)
                 }
-                jsonPath("\$.errors.email") {
+                jsonPath("\$.fields.email") {
                     value("Email 'newauthor@example.com' is duplicated")
                 }
             }

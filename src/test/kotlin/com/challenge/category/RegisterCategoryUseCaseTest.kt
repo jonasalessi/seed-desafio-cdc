@@ -42,10 +42,10 @@ class RegisterCategoryUseCaseTest : IntegrationTest() {
         }
             .andExpect {
                 status { isBadRequest() }
-                jsonPath("\$.errors.length()") {
+                jsonPath("\$.fields.length()") {
                     value(1)
                 }
-                jsonPath("\$.errors.name") {
+                jsonPath("\$.fields.name") {
                     value("Name is required")
                 }
             }
@@ -72,10 +72,10 @@ class RegisterCategoryUseCaseTest : IntegrationTest() {
         }
             .andExpect {
                 status { isBadRequest() }
-                jsonPath("\$.errors.length()") {
+                jsonPath("\$.fields.length()") {
                     value(1)
                 }
-                jsonPath("\$.errors.name") {
+                jsonPath("\$.fields.name") {
                     value("Name 'Category Duplicated' is duplicated")
                 }
             }

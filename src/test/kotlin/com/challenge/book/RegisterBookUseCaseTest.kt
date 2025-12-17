@@ -20,7 +20,7 @@ class RegisterBookUseCaseTest : IntegrationTest() {
         }
             .andExpect {
                 status { isBadRequest() }
-                jsonPath("\$.errors.categoryId") {
+                jsonPath("\$.fields.categoryId") {
                     value("Category not found")
                 }
             }
@@ -36,7 +36,7 @@ class RegisterBookUseCaseTest : IntegrationTest() {
         }
             .andExpect {
                 status { isBadRequest() }
-                jsonPath("\$.errors.authorId") {
+                jsonPath("\$.fields.authorId") {
                     value("Author not found")
                 }
             }
@@ -59,10 +59,10 @@ class RegisterBookUseCaseTest : IntegrationTest() {
         }
             .andExpect {
                 status { isBadRequest() }
-                jsonPath("\$.errors.length()") {
+                jsonPath("\$.fields.length()") {
                     value(1)
                 }
-                jsonPath("\$.errors.title") {
+                jsonPath("\$.fields.title") {
                     value("Book with title 'New Book' already exists")
                 }
             }
@@ -89,10 +89,10 @@ class RegisterBookUseCaseTest : IntegrationTest() {
         }
             .andExpect {
                 status { isBadRequest() }
-                jsonPath("\$.errors.length()") {
+                jsonPath("\$.fields.length()") {
                     value(1)
                 }
-                jsonPath("\$.errors.title") {
+                jsonPath("\$.fields.title") {
                     value("Field is required")
                 }
             }
@@ -106,19 +106,19 @@ class RegisterBookUseCaseTest : IntegrationTest() {
         }
             .andExpect {
                 status { isBadRequest() }
-                jsonPath("\$.errors.length()") {
+                jsonPath("\$.fields.length()") {
                     value(4)
                 }
-                jsonPath("\$.errors.title") {
+                jsonPath("\$.fields.title") {
                     value("Title is required")
                 }
-                jsonPath("\$.errors.summary") {
+                jsonPath("\$.fields.summary") {
                     value("Summary is required")
                 }
-                jsonPath("\$.errors.isbn") {
+                jsonPath("\$.fields.isbn") {
                     value("ISBN is required")
                 }
-                jsonPath("\$.errors.tableOfContents") {
+                jsonPath("\$.fields.tableOfContents") {
                     value("Table of contents is required")
                 }
             }
@@ -135,10 +135,10 @@ class RegisterBookUseCaseTest : IntegrationTest() {
         }
             .andExpect {
                 status { isBadRequest() }
-                jsonPath("\$.errors.length()") {
+                jsonPath("\$.fields.length()") {
                     value(1)
                 }
-                jsonPath("\$.errors.summary") {
+                jsonPath("\$.fields.summary") {
                     value("Must have a maximum of 500 characters")
                 }
             }
@@ -154,10 +154,10 @@ class RegisterBookUseCaseTest : IntegrationTest() {
         }
             .andExpect {
                 status { isBadRequest() }
-                jsonPath("\$.errors.length()") {
+                jsonPath("\$.fields.length()") {
                     value(1)
                 }
-                jsonPath("\$.errors.releaseDate") {
+                jsonPath("\$.fields.releaseDate") {
                     value("Release date must be in the future")
                 }
             }
@@ -173,13 +173,13 @@ class RegisterBookUseCaseTest : IntegrationTest() {
         }
             .andExpect {
                 status { isBadRequest() }
-                jsonPath("\$.errors.length()") {
+                jsonPath("\$.fields.length()") {
                     value(2)
                 }
-                jsonPath("\$.errors.price") {
+                jsonPath("\$.fields.price") {
                     value("Price must be at least 20")
                 }
-                jsonPath("\$.errors.numberOfPages") {
+                jsonPath("\$.fields.numberOfPages") {
                     value("Number of pages must be at least 100")
                 }
             }
