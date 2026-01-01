@@ -6,8 +6,8 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.web.servlet.post
 
-@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS, scripts = ["/register-book.sql"])
-@Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_CLASS, scripts = ["/register-book-clean.sql"])
+@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS, scripts = ["/books/register-book.sql"])
+@Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_CLASS, scripts = ["/books/register-book-clean.sql"])
 class RegisterBookUseCaseTest : IntegrationTest() {
 
     @Test

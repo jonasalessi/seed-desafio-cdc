@@ -23,11 +23,11 @@ class RegisterBookUseCase(
     fun execute(@RequestBody @Valid request: RegisterBookRequestDto) { //4
         val category = categoryRepository.findById(request.categoryId)
         if (!category.isPresent) { //6
-            throw FieldValidationException("categoryId", "Category not found")
+            throw FieldValidationException("categoryId", "Category not found") // 7
         }
         val author = authorRepository.findById(request.authorId)
-        if (!author.isPresent) { //8
-            throw FieldValidationException("authorId", "Author not found")//9
+        if (!author.isPresent) { //9
+            throw FieldValidationException("authorId", "Author not found")
         }
         if (bookRepository.existsByTitleIgnoreCase(request.title)) {//11
             throw FieldValidationException("title", "Book with title '${request.title}' already exists")
