@@ -77,3 +77,8 @@ Expected result:
 
 - A new book must be created and status 200 returned
 - If any constraint is not met, return 400 and a JSON informing the validation problems
+
+# Requirement 5
+Needs: 
+- List all books registered in the system
+- The JSON must contain the fields: id and name
