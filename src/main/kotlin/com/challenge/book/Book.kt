@@ -18,6 +18,7 @@ class Book(
     val summary: String,
     @Lob
     @Column(name = "table_contents")
+    @NotBlank
     val tableOfContents: String,
     @Column(nullable = false)
     val price: BigDecimal,
