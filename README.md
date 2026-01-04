@@ -79,6 +79,29 @@ Expected result:
 - If any constraint is not met, return 400 and a JSON informing the validation problems
 
 # Requirement 5
-Needs: 
+
+Needs:
+
 - List all books registered in the system
 - The JSON must contain the fields: id and name
+
+# Requirement 6
+
+Create an endpoint to list a book details by id.
+
+Response:
+
+- title
+- summary
+- tableOfContent
+- price
+- numberOfPages
+- isbn
+- releaseDate
+- author name
+- author description
+
+Constraints:
+
+- The id is required
+- If the book is not found, return 404

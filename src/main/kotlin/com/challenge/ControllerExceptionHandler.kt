@@ -30,6 +30,15 @@ class ControllerExceptionHandler {
         return problemDetail
     }
 
+    @ExceptionHandler(NotFoundException::class)
+    fun handleNotFountException(ex: NotFoundException): ProblemDetail {
+        return buildProblemDetail(
+            HttpStatus.NOT_FOUND,
+            "Not Found",
+            ex.message ?: "Resource not found"
+        )
+    }
+
     @ExceptionHandler(DataIntegrityViolationException::class)
     fun handleDataIntegrityViolationException(): ProblemDetail {
         return buildProblemDetail(
@@ -88,6 +97,7 @@ class ControllerExceptionHandler {
             "An error occurred. Please try again later"
         )
     }
+
     /**
      * It covers validation done from Hibernate
      */
