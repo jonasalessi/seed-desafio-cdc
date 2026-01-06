@@ -10,5 +10,5 @@ class ListBooksUseCase(
     private val bookRepository: BookRepository
 ) {
     @GetMapping
-    fun execute() = bookRepository.findAll().map { BookDto(it.id!!, it.title)}
+    fun execute() = bookRepository.findBooksBy(BookDto::class.java)
 }
