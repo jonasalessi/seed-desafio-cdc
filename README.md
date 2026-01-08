@@ -105,3 +105,24 @@ Constraints:
 
 - The id is required
 - If the book is not found, return 404
+
+# Requirement 7
+
+A simple registration system for countries and their respective states.
+
+Each country has a name, and each state has a name and belongs to a country.
+
+Country Constraints
+• The name is required.
+• The name must be unique.
+
+State Constraints
+• The name is required.
+• The name must be unique.
+• A country is required.
+
+Expected Result
+Two endpoints should be available to allow the registration of countries and states.
+It should be possible to have countries without any associated states.
+
+If any constraint is not met, return a 400 Bad Request with a JSON containing the validation errors.

@@ -1,0 +1,7 @@
+POST localhost:8080/states
+Content-Type: application/json
+
+{
+  "name": "Rio Grande Do Sul",
+  "countryId": 1
+}
