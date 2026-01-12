@@ -126,3 +126,46 @@ Two endpoints should be available to allow the registration of countries and sta
 It should be possible to have countries without any associated states.
 
 If any constraint is not met, return a 400 Bad Request with a JSON containing the validation errors.
+
+# Requirement 8 - Payment Flow
+
+Start of the payment flow – part 1
+
+## Requirements
+
+One important thing: on CDC(Casa do Código), you don’t create an account and have your purchases associated with it. Every
+time, you enter your email, CPF/CNPJ, etc. How this will be implemented depends on the application.
+
+The following fields must be filled in:
+
+- email
+- first name
+- last name
+- document (CPF/CNPJ)
+- address
+- address complement
+- city
+- country
+- state (if that country has states)
+- phone number
+- ZIP/postal code
+
+### Restrictions
+
+- email is mandatory and must have a valid format
+- first name is mandatory
+- last name is mandatory
+- document (CPF/CNPJ) is mandatory and must be either a CPF or a CNPJ
+- address is mandatory
+- address complement is mandatory
+- city is mandatory
+- country is mandatory
+- if the country has states, a state must be selected
+- state (only if the selected country has states)
+- phone number is mandatory
+- ZIP/postal code is mandatory
+
+### Expected result
+
+The purchase is partially generated, but not yet saved in the database. The order details themselves are still missing and
+will be handled in the next step/card.
