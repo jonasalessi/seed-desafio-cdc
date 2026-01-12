@@ -20,4 +20,8 @@ class IntegrationTest {
     fun <T> MockMvcResultMatchersDsl.contentWith(expected: T) {
         this.content { json(mapper.writeValueAsString(expected)) }
     }
+
+    fun toJson(obj: Any): String {
+        return mapper.writeValueAsString(obj)
+    }
 }
