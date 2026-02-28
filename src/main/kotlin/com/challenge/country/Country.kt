@@ -12,7 +12,7 @@ class Country(
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null
+    val id: Int? = null
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

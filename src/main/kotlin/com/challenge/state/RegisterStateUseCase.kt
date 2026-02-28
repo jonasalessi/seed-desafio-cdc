@@ -21,7 +21,7 @@ class RegisterStateUseCase(
     @Transactional
     fun execute(@RequestBody @Valid request: RegisterStateRequestDto) {
         if (repository.existsByNameIgnoreCase(request.name)) {
-            throw FieldValidationException("name", "State with name '${request.name}' already exists")
+            throw FieldValidationException("name", "State/Province/Region with name '${request.name}' already exists")
         }
 
         val country = countryRepository.findByIdOrNull(request.countryId)
