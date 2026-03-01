@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface StateRepository : CrudRepository<State, Long> {
     fun existsByNameIgnoreCase(name: String): Boolean
+    fun existsByIdAndCountryId(stateId: Long, countryId: Int): Boolean
 }
