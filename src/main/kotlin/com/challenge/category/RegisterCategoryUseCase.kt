@@ -15,9 +15,10 @@ class RegisterCategoryUseCase(private val repository: CategoryRepository) {
     @PostMapping
     @Transactional
     fun execute(@RequestBody @Valid request: RegisterCategoryRequestDto) {
-        if (repository.existsByNameIgnoreCase(request.name)) {
-            throw FieldValidationException("name", "Name '${request.name}' is duplicated")
-        }
+        if (repository.existsByNameIgnoreCase(request.name)) throw FieldValidationException(
+            "name",
+            "Name '${request.name}' is duplicated"
+        )
         repository.save(request.toEntity())
     }
 }

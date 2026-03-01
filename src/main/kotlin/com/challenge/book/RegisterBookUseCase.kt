@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+
 // ICP 11
 @RestController
 @RequestMapping("/books")
@@ -16,22 +17,22 @@ class RegisterBookUseCase(
     private val categoryRepository: CategoryRepository,
     private val authorRepository: AuthorRepository,
     private val bookRepository: BookRepository
-) { //3
+) {
 
     @PostMapping
     @Transactional
-    fun execute(@RequestBody @Valid request: RegisterBookRequestDto) { //4
+    fun execute(@RequestBody @Valid request: RegisterBookRequestDto) {
         val category = categoryRepository.findById(request.categoryId)
-        if (!category.isPresent) { //6
-            throw FieldValidationException("categoryId", "Category not found") // 7
-        }
+        if (!category.isPresent) throw FieldValidationException("categoryId", "Category not found")
+
         val author = authorRepository.findById(request.authorId)
-        if (!author.isPresent) { //9
-            throw FieldValidationException("authorId", "Author not found")
-        }
-        if (bookRepository.existsByTitleIgnoreCase(request.title)) {//11
-            throw FieldValidationException("title", "Book with title '${request.title}' already exists")
-        }
+        if (!author.isPresent) throw FieldValidationException("authorId", "Author not found")
+
+        if (bookRepository.existsByTitleIgnoreCase(request.title)) throw FieldValidationException(
+            "title",
+            "Book with title '${request.title}' already exists"
+        )
+
         bookRepository.save(request.toEntity(category.get(), author.get()))
     }
 }

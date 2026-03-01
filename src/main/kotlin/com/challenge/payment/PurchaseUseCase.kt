@@ -17,9 +17,7 @@ class PurchaseUseCase(
     @PostMapping
     fun execute(@RequestBody @Valid request: PaymentRequestDto) {
         val country = countryRepository.findById(request.location.countryId)
-        if (!country.isPresent) {
-            throw FieldValidationException("location.countrId", "Country not found")
-        }
+        if (!country.isPresent) throw FieldValidationException("location.countryId", "Country not found")
         println(request)
     }
 }

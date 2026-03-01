@@ -41,7 +41,7 @@ class RegisterAuthorUseCaseTest : IntegrationTest() {
             }
         """.trimIndent()
 
-         mockMvc.post("/authors") {
+        mockMvc.post("/authors") {
             contentType = MediaType.APPLICATION_JSON
             content = payload
         }
@@ -50,13 +50,13 @@ class RegisterAuthorUseCaseTest : IntegrationTest() {
                 jsonPath("\$.fields.length()") {
                     value(3)
                 }
-                jsonPath("\$.fields.name"){
+                jsonPath("\$.fields.name") {
                     value("Name is required")
                 }
-                jsonPath("\$.fields.email"){
+                jsonPath("\$.fields.email") {
                     value("Email is required")
                 }
-                jsonPath("\$.fields.description"){
+                jsonPath("\$.fields.description") {
                     value("Description is required")
                 }
             }
@@ -81,14 +81,14 @@ class RegisterAuthorUseCaseTest : IntegrationTest() {
                 jsonPath("\$.fields.length()") {
                     value(1)
                 }
-                jsonPath("\$.fields.email"){
+                jsonPath("\$.fields.email") {
                     value("Email is invalid")
                 }
             }
     }
 
     @Test
-    fun `should not accept description longer than 400`(){
+    fun `should not accept description longer than 400`() {
         val payload = """
             {
               "name": "Alice",
@@ -106,7 +106,7 @@ class RegisterAuthorUseCaseTest : IntegrationTest() {
                 jsonPath("\$.fields.length()") {
                     value(1)
                 }
-                jsonPath("\$.fields.description"){
+                jsonPath("\$.fields.description") {
                     value("Description must be at most 400 characters long")
                 }
             }

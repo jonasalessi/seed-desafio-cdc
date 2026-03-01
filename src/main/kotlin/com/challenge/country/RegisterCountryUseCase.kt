@@ -15,9 +15,10 @@ class RegisterCountryUseCase(private val repository: CountryRepository) {
     @PostMapping
     @Transactional
     fun execute(@RequestBody @Valid request: RegisterCountryRequestDto) {
-        if (repository.existsByNameIgnoreCase(request.name)) {
-            throw FieldValidationException("name", "Country with name '${request.name}' already exists")
-        }
+        if (repository.existsByNameIgnoreCase(request.name)) throw FieldValidationException(
+            "name",
+            "Country with name '${request.name}' already exists"
+        )
         repository.save(request.toEntity())
     }
 }

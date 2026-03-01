@@ -1,6 +1,5 @@
 package com.challenge.shared.validators.document
 
-import com.challenge.shared.validators.BrazilianDocumentValid
 import jakarta.validation.ConstraintValidator
 import jakarta.validation.Validator
 import org.hibernate.validator.constraints.br.CNPJ

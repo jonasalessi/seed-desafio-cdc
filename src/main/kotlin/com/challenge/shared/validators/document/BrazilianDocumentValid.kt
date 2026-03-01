@@ -1,6 +1,5 @@
-package com.challenge.shared.validators
+package com.challenge.shared.validators.document
 
-import com.challenge.shared.validators.document.BrazilianDocumentValidator
 import jakarta.validation.Constraint
 import jakarta.validation.Payload
 import kotlin.reflect.KClass

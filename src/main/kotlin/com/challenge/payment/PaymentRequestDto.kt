@@ -1,18 +1,16 @@
 package com.challenge.payment
 
-import com.challenge.shared.validators.BrazilianDocumentValid
+import com.challenge.shared.validators.document.BrazilianDocumentValid
 import jakarta.validation.Valid
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.NotBlank
-import org.hibernate.validator.constraints.br.CPF
 
 data class PaymentRequestDto(
     @Email(message = "Email must be a well-formed email address")
     val email: String,
     @NotBlank(message = "Document is required")
     @BrazilianDocumentValid
-    @CPF
     val document: String,
     @NotBlank(message = "First name is required")
     val firstName: String,

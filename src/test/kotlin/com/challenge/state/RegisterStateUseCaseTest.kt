@@ -64,7 +64,7 @@ class RegisterStateUseCaseTest : IntegrationTest() {
             .andExpect {
                 status { isBadRequest() }
                 jsonPath("$.fields.name") {
-                    value("State with name 'São Paulo' already exists")
+                    value("State/Province/Region with name 'São Paulo' already exists")
                 }
             }
     }
@@ -89,7 +89,7 @@ class RegisterStateUseCaseTest : IntegrationTest() {
             .andExpect {
                 status { isBadRequest() }
                 jsonPath("$.fields.name") {
-                    value("State with name 'são paulo' already exists")
+                    value("State/Province/Region with name 'são paulo' already exists")
                 }
             }
     }

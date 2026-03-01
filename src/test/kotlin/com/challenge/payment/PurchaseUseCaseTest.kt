@@ -38,7 +38,7 @@ class PurchaseUseCaseTest : IntegrationTest() {
                     value("Email must be a well-formed email address")
                 }
                 jsonPath("\$.fields.document") {
-                    value("CPF is invalid")
+                    value("CPF/CNPJ is invalid")
                 }
                 jsonPath("\$.fields.phoneNumber") {
                     value("Phone number is required")

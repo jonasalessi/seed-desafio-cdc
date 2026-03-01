@@ -15,9 +15,10 @@ class RegisterAuthorUseCase(private val repository: AuthorRepository) {
     @PostMapping
     @Transactional
     fun execute(@RequestBody @Valid request: RegisterAuthorRequestDto) {
-        if (repository.existsByEmail(request.email)) {
-            throw FieldValidationException("email", "Email '${request.email}' is duplicated")
-        }
+        if (repository.existsByEmail(request.email)) throw FieldValidationException(
+            "email",
+            "Email '${request.email}' is duplicated"
+        )
         repository.save(request.toEntity())
     }
 }
