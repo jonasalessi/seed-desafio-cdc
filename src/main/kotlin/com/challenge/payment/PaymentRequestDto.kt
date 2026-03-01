@@ -23,15 +23,15 @@ data class PaymentRequestDto(
 )
 
 data class LocationDto(
-    @NotBlank(message = "Address is required")
+    @field:NotBlank(message = "Address is required")
     val address: String,
-    @NotBlank(message = "Address complement is required")
+    @field:NotBlank(message = "Address complement is required")
     val complement: String,
-    @NotBlank(message = "City is required")
+    @field:NotBlank(message = "City is required")
     val city: String,
-    @Min(message = "Country is not valid", value = 1)
+    @field:Min(message = "Country is not valid", value = 1)
     val countryId: Int,
     val stateId: Long?,
-    @NotBlank(message = "Postal code is required")
+    @field:NotBlank(message = "Postal code is required")
     val postalCode: String
 )

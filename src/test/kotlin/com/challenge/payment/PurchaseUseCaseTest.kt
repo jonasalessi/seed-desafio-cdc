@@ -14,7 +14,7 @@ class PurchaseUseCaseTest : IntegrationTest() {
             content = toJson(
                 PaymentRequestDto(
                     email = "user@.com",
-                    document = "12345678901",
+                    document = "123.456.789-01",
                     firstName = "",
                     lastName = "",
                     phoneNumber = "",
